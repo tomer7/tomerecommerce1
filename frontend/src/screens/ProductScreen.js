@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import Rating from '../components/Rating'
@@ -10,13 +10,12 @@ import { listProductDetails } from '../actions/productActions'
 const ProductScreen = () => {
    // this params come from the URL
    const params = useParams()
-   const [qty, setQty] = useState(0)
-
+   const [qty, setQty] = useState(1)
+   const navigate = useNavigate()
    // const product = products.find((item) => item._id === params.id)
    const dispatch = useDispatch()
 
    const productDetails = useSelector((state) => state.productDetails)
-   console.log(productDetails)
    const { loading, error, product } = productDetails
 
    useEffect(() => {
@@ -24,7 +23,7 @@ const ProductScreen = () => {
    }, [dispatch, params])
 
    const addToCartHandler = () => {
-      // history.push(`/cart/${params.id}?qty=${qty}`)
+      navigate(`/cart/${params.id}?qty=${qty}`)
    }
 
    return (
