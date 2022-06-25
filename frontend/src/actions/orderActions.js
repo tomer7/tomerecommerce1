@@ -12,7 +12,16 @@ import {
    ORDER_PAY_RESET,
    ORDER_LIST_MY_REQUEST,
    ORDER_LIST_MY_SUCCESS,
-   ORDER_LIST_MY_FAIL
+   ORDER_LIST_MY_FAIL,
+   ORDER_LIST_MY_RESET,
+   ORDER_GET_ALL_REQUEST,
+   ORDER_GET_ALL_SUCCESS,
+   ORDER_GET_ALL_FAIL,
+   ORDER_GET_ALL_RESET,
+   ORDER_DELIVER_REQUEST,
+   ORDER_DELIVER_SUCCESS,
+   ORDER_DELIVER_FAIL,
+   ORDER_DELIVER_RESET
 } from '../constants/orderConstants'
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -136,6 +145,48 @@ export const payOrder =
       }
    }
 
+export const deliverOrder = (order) => async (dispatch, getState) => {
+   try {
+      dispatch({
+         type: ORDER_DELIVER_REQUEST
+      })
+
+      // The TOKEN is inside :
+      // getState().userLogin.userInfo.token
+      const { userLogin } = getState()
+      const { userInfo } = userLogin
+
+      // const {
+      //    userLogin: { userInfo }
+      // } = getState()
+
+      const config = {
+         headers: {
+            Authorization: `Bearer ${userInfo.token}`
+         }
+      }
+
+      const { data } = await axios.put(
+         `/api/orders/${order._id}/deliver`,
+         {},
+         config
+      )
+
+      dispatch({
+         type: ORDER_DELIVER_SUCCESS,
+         payload: data
+      })
+   } catch (error) {
+      dispatch({
+         type: ORDER_DELIVER_FAIL,
+         payload:
+            error.response && error.response.data.message
+               ? error.response.data.message
+               : error.message
+      })
+   }
+}
+
 export const listMyOrders = () => async (dispatch, getState) => {
    try {
       dispatch({
@@ -157,10 +208,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
          }
       }
 
-      const { data } = await axios.get(
-         `/api/orders/myorders`,
-         config
-      )
+      const { data } = await axios.get(`/api/orders/myorders`, config)
 
       dispatch({
          type: ORDER_LIST_MY_SUCCESS,
@@ -169,6 +217,45 @@ export const listMyOrders = () => async (dispatch, getState) => {
    } catch (error) {
       dispatch({
          type: ORDER_LIST_MY_FAIL,
+         payload:
+            error.response && error.response.data.message
+               ? error.response.data.message
+               : error.message
+      })
+   }
+}
+
+// Admin Fetching all orders
+export const listAllOrders = () => async (dispatch, getState) => {
+   try {
+      dispatch({
+         type: ORDER_GET_ALL_REQUEST
+      })
+
+      // The TOKEN is inside :
+      // getState().userLogin.userInfo.token
+      const { userLogin } = getState()
+      const { userInfo } = userLogin
+
+      // const {
+      //    userLogin: { userInfo }
+      // } = getState()
+
+      const config = {
+         headers: {
+            Authorization: `Bearer ${userInfo.token}`
+         }
+      }
+
+      const { data } = await axios.get(`/api/orders`, config)
+
+      dispatch({
+         type: ORDER_GET_ALL_SUCCESS,
+         payload: data
+      })
+   } catch (error) {
+      dispatch({
+         type: ORDER_GET_ALL_FAIL,
          payload:
             error.response && error.response.data.message
                ? error.response.data.message
