@@ -10,6 +10,7 @@ import {
    createProductReview
 } from '../actions/productActions'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
+import Meta from '../components/Meta'
 
 const ProductScreen = () => {
    // this params come from the URL
@@ -61,6 +62,7 @@ const ProductScreen = () => {
             <Message variant='danger'>{error}</Message>
          ) : (
             <>
+               <Meta title={product.name} />
                <Row>
                   <Col md={6}>
                      {/* fluid keep the img inside of the container */}
