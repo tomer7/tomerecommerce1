@@ -6,6 +6,8 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { login } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
+// import { FacebookLoginButton } from 'react-social-login-buttons'
+import { SocialIcon } from 'react-social-icons'
 
 const LoginScreen = () => {
    const [email, setEmail] = useState('')
@@ -58,10 +60,16 @@ const LoginScreen = () => {
                   onChange={(e) => setPassword(e.target.value)}
                ></Form.Control>
             </Form.Group>
+            <Form.Group controlId='socialButtons'>
+               <SocialIcon url='https://facebook.com/' />
+               <SocialIcon url='https://google.com/' />
+            </Form.Group>
 
-            <Button type='submit' variant='primary'>
-               Sign In
-            </Button>
+            <Form.Group controlId='signIn'>
+               <Button type='submit' variant='primary'>
+                  Sign In
+               </Button>
+            </Form.Group>
          </Form>
 
          <Row className='py-3'>
