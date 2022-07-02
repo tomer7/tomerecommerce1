@@ -8,12 +8,48 @@ import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
+import authRoute from './routes/auth.js'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
+import cookieSession from 'cookie-session'
+import passport from 'passport'
+import cors from 'cors'
+import User from './models/userModel.js'
 dotenv.config()
-
 connectDB()
 
 const app = express()
+
+// import passportSetup from './passport.js'
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
+passport.use(
+   new GoogleStrategy(
+      {
+         clientID: process.env.CLIENT_ID_G,
+         clientSecret: process.env.CLIENT_SECRET_G,
+         callbackURL: '/auth/google/callback'
+      },
+      function (accessToken, refreshToken, profile, cb) {
+         User.findOrCreate(
+            {
+               googleId: profile.id,
+               name: profile.displayName,
+               email: profile._json.email,
+               password: '123123'
+            },
+            function (err, user) {
+               return cb(err, user)
+            }
+         )
+      }
+   )
+)
+
+passport.serializeUser((user, cb) => {
+   cb(null, user)
+})
+passport.deserializeUser((user, cb) => {
+   cb(null, user)
+})
 
 if (process.env.NODE_ENV === 'development') {
    app.use(morgan('dev'))
@@ -21,6 +57,27 @@ if (process.env.NODE_ENV === 'development') {
 
 // allow us to accept JSON data in the body.
 app.use(express.json())
+
+app.use(
+   cookieSession({
+      name: 'session',
+      keys: ['lama'],
+      maxAge: 24 * 60 * 60 * 100
+   })
+)
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+app.use(
+   cors({
+      origin: 'http://localhost:5000',
+      methods: 'GET,POST,PUT,DELETE',
+      credentials: true
+   })
+)
+
+app.use('/auth', authRoute)
 
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)

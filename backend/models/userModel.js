@@ -1,5 +1,7 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
+import findOrCreate from 'mongoose-findorcreate'
+
 const userSchema = mongoose.Schema(
    {
       name: {
@@ -19,7 +21,8 @@ const userSchema = mongoose.Schema(
          type: Boolean,
          required: true,
          default: false
-      }
+      },
+      googleId: String
    },
    {
       timestamps: true
@@ -38,6 +41,8 @@ userSchema.pre('save', async function (next) {
    const salt = await bcrypt.genSalt(10)
    this.password = await bcrypt.hash(this.password, salt)
 })
+
+userSchema.plugin(findOrCreate)
 
 const User = mongoose.model('User', userSchema)
 

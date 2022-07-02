@@ -1,6 +1,8 @@
 import AsyncHandler from 'express-async-handler'
 import generateToken from '../utils/generateToken.js'
 import User from '../models/userModel.js'
+import dotenv from 'dotenv'
+dotenv.config()
 
 // @desc     Auth user & get token.
 // @route     POST  /api/users/login

@@ -6,8 +6,10 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { login } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
-// import { FacebookLoginButton } from 'react-social-login-buttons'
-import { SocialIcon } from 'react-social-icons'
+import {
+   FacebookLoginButton,
+   GoogleLoginButton
+} from 'react-social-login-buttons'
 
 const LoginScreen = () => {
    const [email, setEmail] = useState('')
@@ -20,6 +22,8 @@ const LoginScreen = () => {
    const userLogin = useSelector((state) => state.userLogin)
    const { loading, error, userInfo } = userLogin
 
+   // after sign in the user is moving to home page,
+   // what after the : is where user go
    const redirect = location.search ? location.search.split('=')[1] : '/'
 
    useEffect(() => {
@@ -31,6 +35,10 @@ const LoginScreen = () => {
    const submitHandler = (event) => {
       event.preventDefault()
       dispatch(login(email, password))
+   }
+
+   const googleFunction = () => {
+      window.open('http://localhost:5000/auth/google', '_self')
    }
 
    return (
@@ -61,8 +69,7 @@ const LoginScreen = () => {
                ></Form.Control>
             </Form.Group>
             <Form.Group controlId='socialButtons'>
-               <SocialIcon url='https://facebook.com/' />
-               <SocialIcon url='https://google.com/' />
+               <GoogleLoginButton onClick={googleFunction} />
             </Form.Group>
 
             <Form.Group controlId='signIn'>
