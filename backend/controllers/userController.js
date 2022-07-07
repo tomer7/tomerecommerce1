@@ -9,7 +9,6 @@ dotenv.config()
 // @access     Public
 const authUser = AsyncHandler(async (req, res) => {
    const { email, password } = req.body
-
    const user = await User.findOne({ email: email })
    if (user && (await user.matchPassword(password))) {
       res.json({
@@ -18,6 +17,26 @@ const authUser = AsyncHandler(async (req, res) => {
          email: user.email,
          isAdmin: user.isAdmin,
          token: generateToken(user._id, user.email)
+      })
+   } else {
+      res.status(401)
+      throw new Error('Invalid email or password')
+   }
+})
+
+// @desc     Google - Auth user & get token
+// @route     POST  Google
+// @access     Public
+const authUserFromGoogle = AsyncHandler(async (req, res) => {
+   const googleId = req.body.googleId
+
+   const user = await User.findOne({ googleId: googleId })
+   if (user) {
+      res.json({
+         _id: user._id,
+         name: user.name,
+         googleId: user.googleId,
+         token: generateToken(user._id)
       })
    } else {
       res.status(401)
@@ -172,6 +191,7 @@ const updateUser = AsyncHandler(async (req, res) => {
 
 export {
    authUser,
+   authUserFromGoogle,
    registerUser,
    getUserProfile,
    updateUserProfile,

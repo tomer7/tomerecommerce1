@@ -4,17 +4,17 @@ import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { login } from '../actions/userActions'
+import { login, loginGoogle } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
 import {
    FacebookLoginButton,
-   GoogleLoginButton
+   GoogleLoginButton,
+   GithubLoginButton
 } from 'react-social-login-buttons'
 
 const LoginScreen = () => {
    const [email, setEmail] = useState('')
    const [password, setPassword] = useState('')
-
    const location = useLocation()
    const navigate = useNavigate()
 
@@ -37,8 +37,14 @@ const LoginScreen = () => {
       dispatch(login(email, password))
    }
 
-   const googleFunction = () => {
+   const googleFunction = async () => {
       window.open('http://localhost:5000/auth/google', '_self')
+
+      //dispatch(loginGoogle('117604387632480319222'))
+   }
+
+   const githubFunction = async () => {
+      window.open('http://localhost:5000/auth/github', '_self')
    }
 
    return (
@@ -70,6 +76,7 @@ const LoginScreen = () => {
             </Form.Group>
             <Form.Group controlId='socialButtons'>
                <GoogleLoginButton onClick={googleFunction} />
+               <GithubLoginButton onClick={githubFunction} />
             </Form.Group>
 
             <Form.Group controlId='signIn'>

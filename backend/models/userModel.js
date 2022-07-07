@@ -5,24 +5,20 @@ import findOrCreate from 'mongoose-findorcreate'
 const userSchema = mongoose.Schema(
    {
       name: {
-         type: String,
-         required: true
+         type: String
       },
       email: {
-         type: String,
-         required: true,
-         unique: true
+         type: String
       },
       password: {
-         type: String,
-         required: true
+         type: String
       },
       isAdmin: {
          type: Boolean,
-         required: true,
          default: false
       },
-      googleId: String
+      googleId: String,
+      githubId: String
    },
    {
       timestamps: true

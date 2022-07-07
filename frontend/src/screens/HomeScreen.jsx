@@ -34,13 +34,13 @@ const HomeScreen = () => {
       <>
          <Meta />
          {!keyword ? (
-            <ProductCarousel />
+            <h1>Latest Products:</h1>
          ) : (
             <Link to='/' className='btn btn-light'>
                הקודם
             </Link>
          )}
-         <h1>Latest Products:</h1>
+
          {loading ? (
             <Loader />
          ) : error ? (

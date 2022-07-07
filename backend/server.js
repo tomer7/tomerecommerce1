@@ -14,11 +14,11 @@ import cookieSession from 'cookie-session'
 import passport from 'passport'
 import cors from 'cors'
 import User from './models/userModel.js'
+import { Strategy as GithubStrategy } from 'passport-github2'
 dotenv.config()
 connectDB()
 
 const app = express()
-
 // import passportSetup from './passport.js'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 passport.use(
@@ -32,9 +32,29 @@ passport.use(
          User.findOrCreate(
             {
                googleId: profile.id,
-               name: profile.displayName,
-               email: profile._json.email,
-               password: '123123'
+               name: profile.displayName
+            },
+            function (err, user) {
+               return cb(err, user)
+            }
+         )
+         // done(null, profile)
+      }
+   )
+)
+
+passport.use(
+   new GithubStrategy(
+      {
+         clientID: process.env.CLIENT_ID_GH,
+         clientSecret: process.env.CLIENT_SECRET_GH,
+         callbackURL: '/auth/github/callback'
+      },
+      function (accessToken, refreshToken, profile, cb) {
+         User.findOrCreate(
+            {
+               githubId: profile.id,
+               email: 'koko@walla.com'
             },
             function (err, user) {
                return cb(err, user)

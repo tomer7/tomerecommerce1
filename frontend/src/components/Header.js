@@ -1,16 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
+import { Image, Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
 import { logout } from '../actions/userActions'
 import { useLocation, useNavigate, Route } from 'react-router-dom'
 import SearchBox from './SearchBox'
+import logoPhoto from './logo-200.png'
 
 const Header = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const userLogin = useSelector((state) => state.userLogin)
    const { userInfo } = userLogin
+   const [user, setUser] = useState()
 
    const logoutHandler = () => {
       dispatch(logout())
@@ -19,10 +21,26 @@ const Header = () => {
 
    return (
       <header>
-         <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
+         <Navbar
+            bg='light'
+            variant='light'
+            style={
+               ({ 'border-bottom': '2px solid black' },
+               {
+                  'box-shadow':
+                     '0 4px 7px 0 rgba(0, 0, 0, 0.3), 0 0 20px 0 rgba(0, 0, 0, 0.19)'
+               },
+               {
+                  height: '5rem'
+               })
+            }
+            collapseOnSelect
+         >
             <Container>
                <LinkContainer to='/'>
-                  <Navbar.Brand>Tomer eCommerce</Navbar.Brand>
+                  <Navbar.Brand>
+                     <img src={logoPhoto} />
+                  </Navbar.Brand>
                </LinkContainer>
                <Navbar.Toggle aria-controls='basic-navbar-nav' />
                <Navbar.Collapse id='basic-navbar-nav'>
