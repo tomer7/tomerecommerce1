@@ -11,6 +11,7 @@ import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { faBagShopping } from '@fortawesome/free-solid-svg-icons'
 
 const Header = () => {
+   const [mobile, setMobile] = useState(false)
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const userLogin = useSelector((state) => state.userLogin)
@@ -22,28 +23,45 @@ const Header = () => {
       navigate('/')
    }
 
+   useEffect(() => {
+      let userScreenWidth = window.innerWidth
+      userScreenWidth = Number(userScreenWidth)
+      console.log(userScreenWidth)
+      if (userScreenWidth > Number(380)) {
+         setMobile(false)
+      } else {
+         setMobile(true)
+      }
+   }, [])
+
    return (
       <header>
          <Navbar
             bg='light'
             variant='light'
             expand='lg'
+            className='headerClass'
             style={
-               ({ 'border-bottom': '2px solid black' },
-               {
-                  'box-shadow':
-                     '0 4px 7px 0 rgba(0, 0, 0, 0.3), 0 0 20px 0 rgba(0, 0, 0, 0.19)'
-               },
-               {
-                  height: '5rem'
-               })
+               mobile
+                  ? {
+                       'border-bottom': '2px solid black',
+                       'box-shadow':
+                          '0 4px 7px 0 rgba(0, 0, 0, 0.3), 0 0 20px 0 rgba(0, 0, 0, 0.19)',
+                       height: 'auto'
+                    }
+                  : {
+                       'border-bottom': '2px solid black',
+                       'box-shadow':
+                          '0 4px 7px 0 rgba(0, 0, 0, 0.3), 0 0 20px 0 rgba(0, 0, 0, 0.19)',
+                       height: '5rem'
+                    }
             }
             collapseOnSelect
          >
             <Container>
                <LinkContainer to='/'>
                   <Navbar.Brand>
-                     {/* <img src={logoPhoto} /> */}Tomer eCommerce
+                     <img src={logoPhoto} />
                   </Navbar.Brand>
                </LinkContainer>
                <Navbar.Toggle aria-controls='basic-navbar-nav' />

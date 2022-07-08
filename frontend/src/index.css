@@ -58,3 +58,10 @@ h2 {
 }
 
 /*END carousel */
+
+
+
+@media (max-width: 900px) {
+   .headerClass {
+   }
+}
