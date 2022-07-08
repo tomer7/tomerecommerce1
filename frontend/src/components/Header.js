@@ -27,6 +27,7 @@ const Header = () => {
          <Navbar
             bg='light'
             variant='light'
+            expand='lg'
             style={
                ({ 'border-bottom': '2px solid black' },
                {
@@ -42,7 +43,7 @@ const Header = () => {
             <Container>
                <LinkContainer to='/'>
                   <Navbar.Brand>
-                     <img src={logoPhoto} />
+                     {/* <img src={logoPhoto} /> */}Tomer eCommerce
                   </Navbar.Brand>
                </LinkContainer>
                <Navbar.Toggle aria-controls='basic-navbar-nav' />
