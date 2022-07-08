@@ -24,10 +24,10 @@ const Header = () => {
    }
 
    useEffect(() => {
+      // checking if user from desktop or mobile
       let userScreenWidth = window.innerWidth
       userScreenWidth = Number(userScreenWidth)
-      console.log(userScreenWidth)
-      if (userScreenWidth > Number(420)) {
+      if (userScreenWidth > Number(991)) {
          setMobile(false)
       } else {
          setMobile(true)

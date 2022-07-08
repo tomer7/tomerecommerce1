@@ -37,6 +37,7 @@
       "passport-google-oauth20": "^2.0.0",
       "passport-local": "^1.0.0",
       "passport-local-mongoose": "^7.1.2",
+      "react-easy-crop": "^4.4.0",
       "react-paypal-button-v2": "^2.6.3",
       "react-router": "^6.3.0"
    },

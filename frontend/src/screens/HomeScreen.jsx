@@ -40,7 +40,6 @@ const HomeScreen = () => {
                הקודם
             </Link>
          )}
-
          {loading ? (
             <Loader />
          ) : error ? (
