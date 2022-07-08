@@ -34,7 +34,7 @@ const HomeScreen = () => {
       <>
          <Meta />
          {!keyword ? (
-            <h1>Latest Products:</h1>
+            <h1 style={{ textAlign: 'center' }}>כל המוצרים</h1>
          ) : (
             <Link to='/' className='btn btn-light'>
                הקודם

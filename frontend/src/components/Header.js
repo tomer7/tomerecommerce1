@@ -6,6 +6,9 @@ import { logout } from '../actions/userActions'
 import { useLocation, useNavigate, Route } from 'react-router-dom'
 import SearchBox from './SearchBox'
 import logoPhoto from './logo-200.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-regular-svg-icons'
+import { faBagShopping } from '@fortawesome/free-solid-svg-icons'
 
 const Header = () => {
    const dispatch = useDispatch()
@@ -48,7 +51,11 @@ const Header = () => {
                   <Nav className='ms-auto'>
                      <LinkContainer to='/cart'>
                         <Nav.Link>
-                           <i className='fas fa-shopping-cart'></i> Cart
+                           <FontAwesomeIcon
+                              icon={faBagShopping}
+                              size='2x'
+                              style={{ color: 'black', paddingRight: '15px' }}
+                           />
                         </Nav.Link>
                      </LinkContainer>
                      {userInfo ? (
@@ -63,7 +70,11 @@ const Header = () => {
                      ) : (
                         <LinkContainer to='/login'>
                            <Nav.Link>
-                              <i className='fas fa-user'></i> Sign In
+                              <FontAwesomeIcon
+                                 icon={faUser}
+                                 size='2x'
+                                 style={{ color: 'black' }}
+                              />
                            </Nav.Link>
                         </LinkContainer>
                      )}
