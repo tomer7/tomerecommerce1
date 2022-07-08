@@ -27,7 +27,7 @@ const Header = () => {
       let userScreenWidth = window.innerWidth
       userScreenWidth = Number(userScreenWidth)
       console.log(userScreenWidth)
-      if (userScreenWidth > Number(380)) {
+      if (userScreenWidth > Number(420)) {
          setMobile(false)
       } else {
          setMobile(true)
